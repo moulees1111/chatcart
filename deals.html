@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatCart - Special Deals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background-color: #4a6bff;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffd700;
+        }
+        
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .search-bar {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            width: 200px;
+        }
+        
+        .checkout-btn {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #ff5252;
+        }
+        
+        .cart-link {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+        
+        .cart-link.animate {
+            animation: bounce 0.5s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Main content styles */
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .featured-products {
+            margin-top: 2rem;
+        }
+        
+        .featured-products h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .featured-products h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #4a6bff;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-card .product-info {
+            padding: 1rem;
+        }
+        
+        .product-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .price {
+            font-weight: 700;
+            color: #4a6bff;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: #4a6bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin-top: 0.5rem;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #3a5bef;
+        }
+        
+        /* Deal specific styles */
+        .deal-card {
+            border: 2px solid #ff6b6b;
+        }
+        
+        .deal-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 1;
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            margin-bottom: 1rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: #4a6bff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>ChatCart</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="all-products.html">Products</a></li>
+                <li><a href="deals.html">Deals</a></li>
+                <li><a href="cart.html" class="cart-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+            </ul>
+        </nav>
+        <div class="header-icons">
+            <input type="text" placeholder="Search products..." class="search-bar">
+            <a href="checkout.html" class="checkout-btn">Checkout</a>
+        </div>
+    </header>
+    
+    <main>
+        <section class="featured-products">
+            <h2>Today's Special Deals</h2>
+            <div class="product-grid">
+                <!-- Deal 1 -->
+                <div class="product-card deal-card">
+                    <span class="deal-badge">50% OFF</span>
+                    <img src="https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg" alt="Smartphone">
+                    <div class="product-info">
+                        <h4>Premium Smartphone</h4>
+                        <p class="original-price">₹13,199</p>
+                        <p class="price">₹6,599</p>
+                        <button class="add-to-cart" onclick="addToCart('Smartphone Deal', 6599, 'https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg')">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Deal 2 -->
+                <div class="product-card deal-card">
+                    <span class="deal-badge">30% OFF</span>
+                    <img src="https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg" alt="Keyboard">
+                    <div class="product-info">
+                        <h4>Mechanical Keyboard</h4>
+                        <p class="original-price">₹1,070</p>
+                        <p class="price">₹749</p>
+                        <button class="add-to-cart" onclick="addToCart('Keyboard Deal', 749, 'https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg')">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Deal 3 -->
+                <div class="product-card deal-card">
+                    <span class="deal-badge">25% OFF</span>
+                    <img src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg" alt="Headphones">
+                    <div class="product-info">
+                        <h4>Wireless Headphones</h4>
+                        <p class="original-price">₹3,999</p>
+                        <p class="price">₹2,999</p>
+                        <button class="add-to-cart" onclick="addToCart('Headphones Deal', 2999, 'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg')">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Deal 4 -->
+                <div class="product-card deal-card">
+                    <span class="deal-badge">40% OFF</span>
+                    <img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg" alt="Monitor">
+                    <div class="product-info">
+                        <h4>27" LED Monitor</h4>
+                        <p class="original-price">₹18,499</p>
+                        <p class="price">₹11,099</p>
+                        <button class="add-to-cart" onclick="addToCart('Monitor Deal', 11099, 'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p>© 2023 ChatCart. All rights reserved.</p>
+        <p>Contact us: support@chatcart.com</p>
+    </footer>
+
+    <script>
+        let cart = [];
+        
+        function addToCart(name, price, image) {
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+            
+            updateCartCount();
+            
+            const cartLink = document.querySelector('.cart-link');
+            cartLink.classList.add('animate');
+            setTimeout(() => {
+                cartLink.classList.remove('animate');
+            }, 500);
+            
+            alert(`${name} has been added to your cart!`);
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        
+        function updateCartCount() {
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartLink = document.querySelector('.cart-link');
+            
+            let countBadge = cartLink.querySelector('.cart-count');
+            if (!countBadge) {
+                countBadge = document.createElement('span');
+                countBadge.className = 'cart-count';
+                cartLink.appendChild(countBadge);
+            }
+            
+            countBadge.textContent = cartCount;
+        }
+        
+        function loadCart() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+        });
+    </script>
+</body>
+</html>

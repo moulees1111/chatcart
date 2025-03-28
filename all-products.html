@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products - CHATCART</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header (same as index.html) -->
+    <header>
+        <div class="logo">
+            <h1>CHATCART</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="all-products.html">Products</a></li>
+                <li><a href="#featured">Deals</a></li>
+                <li><a href="cart.html" class="cart-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                <li><a href="login.html" class="login-link"><i class="fas fa-user"></i> Login</a></li>
+            </ul>
+        </nav>
+        <div class="header-icons">
+            <input type="text" placeholder="Search products..." class="search-bar">
+            <a href="checkout.html" class="checkout-btn">Checkout</a>
+        </div>
+    </header>
+
+    <!-- All Products Section -->
+    <section class="all-products">
+        <h2>All Products</h2>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Smartphone">
+                <h4>Smartphone</h4>
+                <p class="price">₹6,599</p>
+                <button class="add-to-cart" onclick="addToCart('Smartphone', 6599, 'https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Keyboard">
+                <h4>Mechanical Keyboard</h4>
+                <p class="price">₹749</p>
+                <button class="add-to-cart" onclick="addToCart('Mechanical Keyboard', 749, 'https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/161559/background-bitter-breakfast-bright-161559.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Oranges">
+                <h4>Fresh Oranges</h4>
+                <p class="price">₹332/kg</p>
+                <button class="add-to-cart" onclick="addToCart('Fresh Oranges', 332, 'https://images.pexels.com/photos/161559/background-bitter-breakfast-bright-161559.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/5945757/pexels-photo-5945757.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Grapes">
+                <h4>Sweet Grapes</h4>
+                <p class="price">₹374/kg</p>
+                <button class="add-to-cart" onclick="addToCart('Sweet Grapes', 374, 'https://images.pexels.com/photos/5945757/pexels-photo-5945757.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 5 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Smartphone">
+                <h4>Premium Smartphone</h4>
+                <p class="price">₹7,499</p>
+                <button class="add-to-cart" onclick="addToCart('Premium Smartphone', 7499, 'https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 6 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/38568/apple-imac-ipad-workplace-38568.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Monitor">
+                <h4>27-inch 4K Monitor</h4>
+                <p class="price">₹2,899</p>
+                <button class="add-to-cart" onclick="addToCart('27-inch 4K Monitor', 2899, 'https://images.pexels.com/photos/38568/apple-imac-ipad-workplace-38568.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 7 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/1646704/pexels-photo-1646704.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Earbuds">
+                <h4>Wireless Earbuds</h4>
+                <p class="price">₹1,079</p>
+                <button class="add-to-cart" onclick="addToCart('Wireless Earbuds', 1079, 'https://images.pexels.com/photos/1646704/pexels-photo-1646704.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 8 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/1275929/pexels-photo-1275929.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Charger">
+                <h4>Fast Charging Adapter</h4>
+                <p class="price">₹249</p>
+                <button class="add-to-cart" onclick="addToCart('Fast Charging Adapter', 249, 'https://images.pexels.com/photos/1275929/pexels-photo-1275929.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 9 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Laptop">
+                <h4>Ultra Slim Laptop</h4>
+                <p class="price">₹32,999</p>
+                <button class="add-to-cart" onclick="addToCart('Ultra Slim Laptop', 32999, 'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 10 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Headphones">
+                <h4>Noise Cancelling Headphones</h4>
+                <p class="price">₹3,299</p>
+                <button class="add-to-cart" onclick="addToCart('Noise Cancelling Headphones', 3299, 'https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 11 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/264537/pexels-photo-264537.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Bananas">
+                <h4>Organic Bananas</h4>
+                <p class="price">₹49/kg</p>
+                <button class="add-to-cart" onclick="addToCart('Organic Bananas', 49, 'https://images.pexels.com/photos/264537/pexels-photo-264537.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            
+            <!-- Product 12 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/4207707/pexels-photo-4207707.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Apples">
+                <h4>Fresh Apples</h4>
+                <p class="price">₹149/kg</p>
+                <button class="add-to-cart" onclick="addToCart('Fresh Apples', 149, 'https://images.pexels.com/photos/4207707/pexels-photo-4207707.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+    <footer>
+        <!-- Same footer content as index.html -->
+    </footer>
+
+    <script>
+        // Same cart functionality as index.html
+        let cart = [];
+        
+        function addToCart(name, price, image) {
+            // Check if item already exists in cart
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+            
+            // Update cart count in header
+            updateCartCount();
+            
+            // Animate cart icon
+            const cartLink = document.querySelector('.cart-link');
+            cartLink.classList.add('animate');
+            setTimeout(() => {
+                cartLink.classList.remove('animate');
+            }, 500);
+            
+            // Show success message
+            alert(`${name} has been added to your cart!`);
+            
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        
+        function updateCartCount() {
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartLink = document.querySelector('.cart-link');
+            
+            // Update or create cart count badge
+            let countBadge = cartLink.querySelector('.cart-count');
+            if (!countBadge) {
+                countBadge = document.createElement('span');
+                countBadge.className = 'cart-count';
+                cartLink.appendChild(countBadge);
+            }
+            
+            countBadge.textContent = cartCount;
+        }
+        
+        // Load cart from localStorage
+        function loadCart() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+        });
+    </script>
+</body>
+</html>

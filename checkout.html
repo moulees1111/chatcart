@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - CHATCART</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Basic styling - you should move this to style.css */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .payment-section {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .payment-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .payment-methods, .order-summary {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .payment-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .payment-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .payment-option:hover {
+            border-color: #3399cc;
+        }
+        
+        .payment-option.active {
+            border-color: #3399cc;
+            background-color: #f0f8ff;
+        }
+        
+        .payment-form {
+            margin-top: 1.5rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        
+        .btn {
+            background-color: #3399cc;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: inherit;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: #2a87b8;
+        }
+        
+        .pay-now-btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .summary-totals {
+            margin-top: 1.5rem;
+            border-top: 1px solid #ddd;
+            padding-top: 1rem;
+        }
+        
+        #order-items {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <section class="payment-section">
+        <h2>Checkout</h2>
+        <div class="payment-container">
+            <div class="payment-methods">
+                <h2>Payment Method</h2>
+                <div class="payment-options">
+                    <div class="payment-option active" onclick="selectPayment(this, 'card')">
+                        <i class="far fa-credit-card"></i>
+                        <span>Credit/Debit Card</span>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment(this, 'upi')">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>UPI</span>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment(this, 'netbanking')">
+                        <i class="fas fa-university"></i>
+                        <span>Net Banking</span>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment(this, 'cod')">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Cash on Delivery</span>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment(this, 'crypto')">
+                        <i class="fas fa-coins"></i>
+                        <span>Blockchain Payment</span>
+                    </div>
+                </div>
+                
+                <!-- Card Payment Form -->
+                <div id="card-payment" class="payment-form">
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" data-payment="card">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry Date</label>
+                            <input type="text" id="card-expiry" placeholder="MM/YY" data-payment="card">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" id="card-cvv" placeholder="123" data-payment="card">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Name on Card</label>
+                        <input type="text" id="card-name" placeholder="John Doe" data-payment="card">
+                    </div>
+                    <button class="btn pay-now-btn" onclick="processCardPayment()">Pay Now</button>
+                </div>
+                
+                <!-- UPI Payment Form -->
+                <div id="upi-payment" class="payment-form hidden">
+                    <div class="form-group">
+                        <label>UPI ID</label>
+                        <input type="text" id="upi-id" placeholder="yourname@upi" data-payment="upi">
+                    </div>
+                    <button class="btn pay-now-btn" onclick="processUPIPayment()">Pay Now</button>
+                </div>
+                
+                <!-- Net Banking Form -->
+                <div id="netbanking-payment" class="payment-form hidden">
+                    <div class="form-group">
+                        <label>Select Bank</label>
+                        <select id="bank-select" data-payment="netbanking">
+                            <option>State Bank of India</option>
+                            <option>HDFC Bank</option>
+                            <option>ICICI Bank</option>
+                            <option>Axis Bank</option>
+                            <option>Punjab National Bank</option>
+                        </select>
+                    </div>
+                    <button class="btn pay-now-btn" onclick="processNetBankingPayment()">Pay Now</button>
+                </div>
+                
+                <!-- Cash on Delivery Form -->
+                <div id="cod-payment" class="payment-form hidden">
+                    <p>Pay with cash when your order is delivered.</p>
+                    <button class="btn pay-now-btn" onclick="processCODPayment()">Place Order</button>
+                </div>
+                
+                <!-- Blockchain Payment Form -->
+                <div id="crypto-payment" class="payment-form hidden">
+                    <div class="form-group">
+                        <label>Wallet Address</label>
+                        <input type="text" id="wallet-address" placeholder="0x..." data-payment="crypto">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (ETH)</label>
+                        <input type="text" id="crypto-amount" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Transaction Details</label>
+                        <textarea id="tx-details" rows="4" readonly></textarea>
+                    </div>
+                    <button class="btn pay-now-btn" onclick="processBlockchainPayment()">Confirm Payment</button>
+                </div>
+            </div>
+            
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <div id="order-items">
+                    <!-- Order items will be dynamically added here -->
+                </div>
+                <div class="summary-totals">
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span id="order-subtotal">₹0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping</span>
+                        <span>₹50</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Tax</span>
+                        <span id="order-tax">₹0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total</span>
+                        <span id="order-total">₹0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Payment Gateway Integration
+        function loadPaymentScripts() {
+            // Load Razorpay script
+            if (!document.querySelector('script[src*="razorpay.com"]')) {
+                const razorpayScript = document.createElement('script');
+                razorpayScript.src = 'https://checkout.razorpay.com/v1/checkout.js';
+                document.head.appendChild(razorpayScript);
+            }
+            
+            // Load Stripe script (optional)
+            if (!document.querySelector('script[src*="stripe.com"]')) {
+                const stripeScript = document.createElement('script');
+                stripeScript.src = 'https://js.stripe.com/v3/';
+                document.head.appendChild(stripeScript);
+            }
+            
+            // Load CryptoJS for blockchain hashing
+            if (!document.querySelector('script[src*="crypto-js"]')) {
+                const cryptoScript = document.createElement('script');
+                cryptoScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
+                document.head.appendChild(cryptoScript);
+            }
+        }
+
+        // Initialize payment methods
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPaymentScripts();
+            loadOrderDetails();
+        });
+
+        // Load order details from cart
+        function loadOrderDetails() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const orderItemsContainer = document.getElementById('order-items');
+            orderItemsContainer.innerHTML = '';
+            
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const orderItem = document.createElement('div');
+                orderItem.className = 'summary-item';
+                orderItem.innerHTML = `
+                    <span>${item.name} × ${item.quantity}</span>
+                    <span>₹${itemTotal.toLocaleString()}</span>
+                `;
+                orderItemsContainer.appendChild(orderItem);
+            });
+            
+            const shipping = 50;
+            const tax = subtotal * 0.18; // 18% tax
+            const total = subtotal + shipping + tax;
+            
+            document.getElementById('order-subtotal').textContent = `₹${subtotal.toLocaleString()}`;
+            document.getElementById('order-tax').textContent = `₹${tax.toFixed(2)}`;
+            document.getElementById('order-total').textContent = `₹${total.toFixed(2)}`;
+            
+            // Update crypto amount if needed
+            if (document.getElementById('crypto-amount')) {
+                document.getElementById('crypto-amount').value = (total / 180000).toFixed(6) + ' ETH';
+                document.getElementById('tx-details').value = `Payment to CHATCART\nAmount: ${(total / 180000).toFixed(6)} ETH\nItems: ${getOrderItems()}`;
+            }
+        }
+
+        // Payment selection
+        function selectPayment(element, method) {
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            
+            element.classList.add('active');
+            
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.classList.add('hidden');
+            });
+            
+            document.getElementById(`${method}-payment`).classList.remove('hidden');
+
+            if (method === 'crypto') {
+                const total = parseFloat(document.getElementById('order-total').textContent.replace('₹', ''));
+                document.getElementById('crypto-amount').value = (total / 180000).toFixed(6) + ' ETH';
+                document.getElementById('tx-details').value = `Payment to CHATCART\nAmount: ${(total / 180000).toFixed(6)} ETH\nItems: ${getOrderItems()}`;
+            }
+        }
+
+        function getOrderItems() {
+            const items = [];
+            document.querySelectorAll('#order-items .summary-item span:first-child').forEach(item => {
+                items.push(item.textContent);
+            });
+            return items.join(', ');
+        }
+
+        // Process payment via Razorpay (card, UPI, netbanking)
+        function processCardPayment() {
+            const amount = parseFloat(document.getElementById('order-total').textContent.replace('₹', '')) * 100;
+            
+            const options = {
+                "key": "rzp_test_YOUR_TEST_KEY", // Replace with your test key
+                "amount": amount,
+                "currency": "INR",
+                "name": "CHATCART",
+                "description": "Payment for your order",
+                "image": "https://example.com/your_logo.jpg",
+                "handler": function(response) {
+                    const paymentDetails = {
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_signature: response.razorpay_signature
+                    };
+                    completePayment('card', paymentDetails);
+                },
+                "prefill": {
+                    "name": document.getElementById('card-name').value,
+                    "email": "customer@example.com",
+                    "contact": "9999999999"
+                },
+                "notes": {
+                    "items": getOrderItems()
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            
+            const rzp = new Razorpay(options);
+            rzp.open();
+            
+            rzp.on('payment.failed', function(response) {
+                alert(`Payment failed: ${response.error.description}`);
+            });
+        }
+
+        function processUPIPayment() {
+            const amount = parseFloat(document.getElementById('order-total').textContent.replace('₹', '')) * 100;
+            
+            const options = {
+                "key": "rzp_test_YOUR_TEST_KEY",
+                "amount": amount,
+                "currency": "INR",
+                "name": "CHATCART",
+                "description": "UPI Payment",
+                "image": "https://example.com/your_logo.jpg",
+                "handler": function(response) {
+                    completePayment('upi', {
+                        upi_id: document.getElementById('upi-id').value,
+                        transaction_id: response.razorpay_payment_id
+                    });
+                },
+                "method": {
+                    "netbanking": false,
+                    "card": false,
+                    "upi": true,
+                    "wallet": false
+                },
+                "prefill": {
+                    "contact": "9999999999"
+                }
+            };
+            
+            const rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        function processNetBankingPayment() {
+            const amount = parseFloat(document.getElementById('order-total').textContent.replace('₹', '')) * 100;
+            const bank = document.getElementById('bank-select').value;
+            
+            const options = {
+                "key": "rzp_test_YOUR_TEST_KEY",
+                "amount": amount,
+                "currency": "INR",
+                "name": "CHATCART",
+                "description": "Net Banking Payment",
+                "image": "https://example.com/your_logo.jpg",
+                "handler": function(response) {
+                    completePayment('netbanking', {
+                        bank: bank,
+                        transaction_id: response.razorpay_payment_id
+                    });
+                },
+                "method": {
+                    "netbanking": true,
+                    "card": false,
+                    "upi": false,
+                    "wallet": false
+                }
+            };
+            
+            const rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        function processCODPayment() {
+            if (confirm('Are you sure you want to place this order with Cash on Delivery?')) {
+                completePayment('cod', {});
+            }
+        }
+
+        // Blockchain payment implementation
+        async function processBlockchainPayment() {
+            if (typeof window.ethereum === 'undefined') {
+                alert('Please install MetaMask or another Ethereum wallet to make blockchain payments');
+                return;
+            }
+
+            try {
+                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                const amount = parseFloat(document.getElementById('order-total').textContent.replace('₹', '')) / 180000;
+                
+                const txHash = await ethereum.request({
+                    method: 'eth_sendTransaction',
+                    params: [{
+                        from: accounts[0],
+                        to: document.getElementById('wallet-address').value || '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+                        value: '0x' + (amount * 1e18).toString(16),
+                        gas: '0x5208',
+                    }]
+                });
+                
+                completePayment('blockchain', {
+                    txHash: txHash,
+                    amount: amount,
+                    wallet: accounts[0]
+                });
+            } catch (error) {
+                alert(`Payment failed: ${error.message}`);
+            }
+        }
+
+        // Complete payment process
+        function completePayment(paymentMethod, details) {
+            const user = sessionStorage.getItem('loggedInUser') || 'guest';
+            const amount = parseFloat(document.getElementById('order-total').textContent.replace('₹', ''));
+            const items = getOrderItems();
+            
+            const transaction = {
+                user,
+                amount,
+                items,
+                paymentMethod,
+                details,
+                timestamp: new Date().toISOString(),
+                status: 'completed'
+            };
+
+            // In a real app, you would send this to your server
+            console.log('Payment completed:', transaction);
+            
+            // Clear cart
+            localStorage.removeItem('cart');
+            
+            // Show success
+            alert(`Payment successful! ${paymentMethod === 'blockchain' ? 'Transaction Hash: ' + details.txHash.substring(0, 16) : 'Thank you for your order!'}`);
+            window.location.href = 'order-confirmation.html';
+        }
+    </script>
+</body>
+</html>

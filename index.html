@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHATCART- Online Shopping</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: #4a6fa5;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo h1 {
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        nav ul {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        nav ul li a:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.2);
+        }
+        .cart-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .cart-link.animate {
+            animation: bounce 0.5s ease;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .search-bar {
+            padding: 10px 15px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            outline: none;
+            width: 250px;
+            transition: all 0.3s ease;
+        }
+        .search-bar:focus {
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.3);
+        }
+        .checkout-btn {
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .checkout-btn:hover {
+            background: #ff4757;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+        }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(74, 111, 165, 0.8), rgba(74, 111, 165, 0.9)), url('https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+        .hero-content h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .btn {
+            padding: 12px 30px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .btn:hover {
+            background: #ff4757;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        /* Featured Products */
+        .featured-products {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .featured-products h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #4a6fa5;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .product-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #4a6fa5;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover::after {
+            transform: scaleX(1);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            object-position: center;
+            background: #f5f7fa;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+        .product-card h4 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .product-card .price {
+            color: #4a6fa5;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .add-to-cart {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            font-size: 15px;
+        }
+        .add-to-cart:hover {
+            background: #3a5a8f;
+        }
+        .view-all {
+            text-align: center;
+            margin-top: 30px;
+        }
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 20px;
+            background: #f0f4f9;
+        }
+        .testimonials h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #4a6fa5;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .testimonial-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .rating {
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .customer {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .customer img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .customer span {
+            font-weight: 600;
+            color: #4a6fa5;
+        }
+        /* Features */
+        .features {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #4a6fa5;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .feature-card i {
+            font-size: 40px;
+            color: #4a6fa5;
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .feature-card p {
+            color: #777;
+        }
+        /* Newsletter */
+        .newsletter {
+            padding: 80px 20px;
+            background: #4a6fa5;
+            color: white;
+            text-align: center;
+        }
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .newsletter h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .newsletter p {
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+        }
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 20px 20px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+        .footer-box {
+            text-align: center;
+        }
+        .footer-box h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .footer-box p {
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+        .footer-box ul {
+            list-style: none;
+        }
+        .footer-box ul li {
+            margin-bottom: 10px;
+        }
+        .footer-box ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-box ul li a:hover {
+            color: white;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #4a6fa5;
+        }
+        .contact-info {
+            text-align: center;
+        }
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bbb;
+            font-size: 14px;
+        }
+        /* Login Page Styles */
+        .login-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 150px);
+            padding: 50px 20px;
+        }
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        .login-container h2 {
+            color: #4a6fa5;
+            margin-bottom: 30px;
+        }
+        .login-form .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .login-form input:focus {
+            border-color: #4a6fa5;
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+        }
+        .form-footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .forgot-password {
+            color: #4a6fa5;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .signup-link {
+            color: #4a6fa5;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .social-login {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+        }
+        .social-login p {
+            margin-bottom: 15px;
+            color: #777;
+        }
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .social-btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .social-btn.google {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .social-btn.facebook {
+            background: #3b5998;
+            color: white;
+        }
+        /* Cart Page Styles */
+        .cart-section {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .cart-section h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #4a6fa5;
+        }
+        .cart-container {
+            display: flex;
+            gap: 30px;
+        }
+        .cart-items {
+            flex: 2;
+        }
+        .cart-summary {
+            flex: 1;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .cart-summary h3 {
+            margin-bottom: 20px;
+            color: #4a6fa5;
+            font-size: 20px;
+        }
+        .summary-details {
+            margin-bottom: 25px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 18px;
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .checkout-btn {
+            width: 100%;
+            text-align: center;
+        }
+        .cart-item {
+            display: flex;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            gap: 20px;
+            align-items: center;
+        }
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: #f5f7fa;
+            padding: 10px;
+        }
+        .item-details {
+            flex: 1;
+        }
+        .item-details h4 {
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .item-details .price {
+            color: #4a6fa5;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .quantity-controls button:hover {
+            background: #e0e0e0;
+        }
+        .item-total {
+            text-align: right;
+        }
+        .item-total p {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .item-total button {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 50px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .empty-cart i {
+            font-size: 50px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        .empty-cart h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .empty-cart p {
+            color: #777;
+            margin-bottom: 20px;
+        }
+        /* Payment Page Styles */
+        .payment-section {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .payment-container {
+            display: flex;
+            gap: 30px;
+        }
+        .payment-methods {
+            flex: 2;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .order-summary {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .payment-methods h2, .order-summary h2 {
+            margin-bottom: 25px;
+            color: #4a6fa5;
+            font-size: 24px;
+        }
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .payment-option {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        .payment-option:hover {
+            border-color: #4a6fa5;
+        }
+        .payment-option.active {
+            border-color: #4a6fa5;
+            background: rgba(74, 111, 165, 0.1);
+        }
+        .payment-option i {
+            font-size: 20px;
+        }
+        .payment-form {
+            margin-top: 20px;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        .hidden {
+            display: none;
+        }
+        .pay-now-btn {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .summary-totals {
+            margin-top: 20px;
+        }
+        /* All Products Page */
+        .all-products {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .all-products h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #4a6fa5;
+        }
+        /* Chatbot Styles */
+        #chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            height: 450px;
+        }
+        #chatbot-container.active {
+            display: flex;
+        }
+        #chatbot-header {
+            padding: 15px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #chatbot-header h3 {
+            font-size: 16px;
+            margin: 0;
+        }
+        #chatbot-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        #chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .message.bot {
+            background: #f0f4f9;
+            border-radius: 18px 18px 18px 4px;
+            margin-right: auto;
+        }
+        .message.user {
+            background: #4a6fa5;
+            color: white;
+            border-radius: 18px 18px 4px 18px;
+            margin-left: auto;
+        }
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .chat-add-btn {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        /* Add to existing chatbot styles */
+.message.bot {
+    line-height: 1.6;
+}
+
+.product-image {
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+    margin: 10px auto;
+    border: 1px solid #eee;
+}
+
+.chat-add-btn {
+    background: #4a6fa5;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.chat-add-btn:hover {
+    background: #3a5a8f;
+    transform: translateY(-2px);
+}
+
+/* Stock status styles */
+.message.bot span {
+    font-weight: bold;
+}
+        #chatbot-input-container {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        #chatbot-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+        }
+        #chatbot-send {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .header-icons {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: center;
+            }
+            .search-bar {
+                width: 100%;
+            }
+            .product-grid, .testimonial-grid, .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .cart-container, .payment-container {
+                flex-direction: column;
+            }
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            #chatbot-container {
+                width: 90%;
+                right: 5%;
+                bottom: 80px;
+            }
+            /* User Profile Styles */
+.user-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.user-link i {
+    font-size: 18px;
+}
+
+#username-display {
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logout-link {
+    color: #ff6b6b;
+}
+
+.logout-link:hover {
+    color: #ff4757;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.hidden {
+    display: none !important;
+}
+        }
+        @media (max-width: 480px) {
+            .product-grid, .testimonial-grid, .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-content h2 {
+                font-size: 32px;
+            }
+            .hero-content p {
+                font-size: 16px;
+            }
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+<!-- Header -->
+<header>
+    <div class="logo">
+        <h1>ChatCart</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="all-products.html">Products</a></li>
+            <li><a href="deals.html">Deals</a></li>
+            <li><a href="cart.html" class="cart-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+            <li id="user-profile" class="hidden">
+                <a href="#" class="user-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="username-display"></span>
+                </a>
+            </li>
+            <li id="login-link">
+                <a href="login.html" class="login-link"><i class="fas fa-user"></i> Login</a>
+            </li>
+            <li id="logout-link" class="hidden">
+                <a href="#" class="logout-link" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="header-icons">
+        <input type="text" placeholder="Search products..." class="search-bar">
+        <a href="checkout.html" class="checkout-btn">Checkout</a>
+    </div>
+</header>
+
+    <!-- Home Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>Welcome to ChatCart</h2>
+            <p>Your one-stop shop for all your needs</p>
+            <div class="hero-buttons">
+                <a href="all-products.html" class="btn">Shop Now</a>
+                <a href="#testimonials" class="btn btn-outline">See Reviews</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="featured" class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Smartphone">
+                <h4>Smartphone</h4>
+                <p class="price">₹6,599</p>
+                <button class="add-to-cart" onclick="addToCart('Smartphone', 6599, 'https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Keyboard">
+                <h4>Mechanical Keyboard</h4>
+                <p class="price">₹749</p>
+                <button class="add-to-cart" onclick="addToCart('Mechanical Keyboard', 749, 'https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/161559/background-bitter-breakfast-bright-161559.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Oranges">
+                <h4>Fresh Oranges</h4>
+                <p class="price">₹332/kg</p>
+                <button class="add-to-cart" onclick="addToCart('Fresh Oranges', 332, 'https://images.pexels.com/photos/161559/background-bitter-breakfast-bright-161559.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+            <!-- Product 4 -->
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/5945757/pexels-photo-5945757.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Grapes">
+                <h4>Sweet Grapes</h4>
+                <p class="price">₹374/kg</p>
+                <button class="add-to-cart" onclick="addToCart('Sweet Grapes', 374, 'https://images.pexels.com/photos/5945757/pexels-photo-5945757.jpeg?auto=compress&cs=tinysrgb&w=300')">Add to Cart</button>
+            </div>
+        </div>
+        <div class="view-all">
+            <a href="all-products.html" class="btn" id="view-all-btn">View All Products</a>
+        </div>
+    </section>
+    
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"CHATCART has the best prices and fastest delivery I've ever experienced. My order arrived the next day!"</p>
+                <div class="customer">
+                    <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Customer">
+                    <span>Priya Sharma</span>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p>"The quality of products is excellent and their customer service is very responsive. Highly recommended!"</p>
+                <div class="customer">
+                    <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Customer">
+                    <span>Rahul Patel</span>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"I love the variety of products available. From groceries to electronics, they have everything I need."</p>
+                <div class="customer">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Customer">
+                    <span>Ananya Gupta</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <h2>Why Choose CHATCART</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-truck"></i>
+                <h3>Fast Delivery</h3>
+                <p>Get your orders delivered within 24 hours in metro cities</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Secure Payments</h3>
+                <p>100% secure payment options with SSL encryption</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-undo"></i>
+                <h3>Easy Returns</h3>
+                <p>10-day easy return policy for all products</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-headset"></i>
+                <h3>24/7 Support</h3>
+                <p>Our customer care team is always ready to help you</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Get the latest updates on new products and upcoming sales</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email address">
+                <button type="submit" class="btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-box">
+                <h3>CHATCART</h3>
+                <p>Your one-stop destination for all shopping needs. Quality products at affordable prices.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-box">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="all-products.html">Products</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-box">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Electronics</a></li>
+                    <li><a href="#">Groceries</a></li>
+                    <li><a href="#">Fashion</a></li>
+                    <li><a href="#">Home & Kitchen</a></li>
+                    <li><a href="#">Beauty</a></li>
+                </ul>
+            </div>
+            <div class="footer-box">
+                <h3>Contact Info</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Market Street, Mumbai, India</p>
+                    <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                    <p><i class="fas fa-envelope"></i> support@CHATCART.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 CHATCART. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <button id="chatbot-toggle"><i class="fas fa-comment-dots"></i> Need Help?</button>
+    <div id="chatbot-container">
+        <div id="chatbot-header">
+            <h3>ChatCart Assistant</h3>
+            <button id="chatbot-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chatbot-messages">
+            <div class="message bot">Hello! I'm your CHATCART assistant. How can I help you today?</div>
+        </div>
+        <div id="chatbot-input-container">
+            <input type="text" id="chatbot-input" placeholder="Type your message...">
+            <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        function addMessage(text, sender) {
+    const messagesContainer = document.getElementById('chatbot-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}`;
+    messageDiv.textContent = text;
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+        // Cart functionality
+        let cart = [];
+        
+        function addToCart(name, price, image) {
+            // Check if item already exists in cart
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+            
+            // Update cart count in header
+            updateCartCount();
+            
+            // Animate cart icon
+            const cartLink = document.querySelector('.cart-link');
+            cartLink.classList.add('animate');
+            setTimeout(() => {
+                cartLink.classList.remove('animate');
+            }, 500);
+            
+            // Show success message
+            alert(`${name} has been added to your cart!`);
+            
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        
+        function updateCartCount() {
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartLink = document.querySelector('.cart-link');
+            
+            // Update or create cart count badge
+            let countBadge = cartLink.querySelector('.cart-count');
+            if (!countBadge) {
+                countBadge = document.createElement('span');
+                countBadge.className = 'cart-count';
+                cartLink.appendChild(countBadge);
+            }
+            
+            countBadge.textContent = cartCount;
+        }
+        
+        // Load cart from localStorage
+        function loadCart() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+            }
+        }
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadCart(); // Existing cart loading function
+    
+    // Chatbot functionality
+    document.getElementById('chatbot-toggle').addEventListener('click', function() {
+        document.getElementById('chatbot-container').classList.toggle('active');
+    });
+    
+    document.getElementById('chatbot-close').addEventListener('click', function() {
+        document.getElementById('chatbot-container').classList.remove('active');
+    });
+    
+    document.getElementById('chatbot-send').addEventListener('click', sendMessage);
+    document.getElementById('chatbot-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+});
+ // Updated Product data for the chatbot with brands and performance metrics
+ const products = [
+        // Smartphones
+        {
+            name: "MI Redmi Note 12",
+            brand: "Xiaomi",
+            price: "₹14,999",
+            category: "Electronics",
+            subcategory: "Smartphones",
+            image: "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=300",
+            description: "6.67\" AMOLED display, Snapdragon 685, 50MP camera, 5000mAh battery",
+            performance: {
+                processor: "Snapdragon 685",
+                ram: "6GB",
+                storage: "128GB",
+                benchmark: "320,000 (Antutu)",
+                battery: "5000mAh (2-day life)"
+            },
+            reviews: [
+                { rating: 4, text: "Great value for money", author: "Rahul K." },
+                { rating: 5, text: "Excellent display quality", author: "Priya M." }
+            ],
+            inStock: true,
+            priceTier: "budget"
+        },
+        {
+            name: "Samsung Galaxy A54",
+            brand: "Samsung",
+            price: "₹32,999",
+            category: "Electronics",
+            subcategory: "Smartphones",
+            image: "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=300",
+            description: "6.4\" Super AMOLED, Exynos 1380, 50MP OIS camera, IP67 water resistance",
+            performance: {
+                processor: "Exynos 1380",
+                ram: "8GB",
+                storage: "128GB",
+                benchmark: "520,000 (Antutu)",
+                battery: "5000mAh (1.5-day life)"
+            },
+            reviews: [
+                { rating: 4, text: "Reliable performance", author: "Arjun P." },
+                { rating: 5, text: "Best mid-range camera", author: "Neha S." }
+            ],
+            inStock: true,
+            priceTier: "mid-range"
+        },
+        {
+            name: "iPhone 14",
+            brand: "Apple",
+            price: "₹79,900",
+            category: "Electronics",
+            subcategory: "Smartphones",
+            image: "https://images.pexels.com/photos/163117/keyboard-apple-mac-keyboard-computer-163117.jpeg?auto=compress&cs=tinysrgb&w=300",
+            description: "6.1\" Super Retina XDR, A15 Bionic, 12MP dual camera, iOS 16",
+            performance: {
+                processor: "A15 Bionic",
+                ram: "6GB",
+                storage: "128GB",
+                benchmark: "820,000 (Antutu)",
+                battery: "3279mAh (1-day life)"
+            },
+            reviews: [
+                { rating: 5, text: "Perfect ecosystem integration", author: "Rohan D." },
+                { rating: 4, text: "Expensive but worth it", author: "Ananya G." }
+            ],
+            inStock: true,
+            priceTier: "premium"
+        },
+        // Laptops
+        {
+            name: "Acer Aspire 5",
+            brand: "Acer",
+            price: "₹42,990",
+            category: "Electronics",
+            subcategory: "Laptops",
+            image: "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300",
+            description: "15.6\" FHD, Intel i5-1235U, 8GB RAM, 512GB SSD, Windows 11",
+            performance: {
+                processor: "Intel i5-1235U",
+                ram: "8GB",
+                storage: "512GB SSD",
+                benchmark: "4,200 (Cinebench R23)",
+                battery: "50Wh (6-8 hours)"
+            },
+            reviews: [
+                { rating: 4, text: "Good for office work", author: "Vikram J." },
+                { rating: 3, text: "Could use more RAM", author: "Sneha M." }
+            ],
+            inStock: true,
+            priceTier: "budget"
+        },
+        {
+            name: "Lenovo IdeaPad Slim 5",
+            brand: "Lenovo",
+            price: "₹64,990",
+            category: "Electronics",
+            subcategory: "Laptops",
+            image: "https://images.pexels.com/photos/7974/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300",
+            description: "14\" 2.2K IPS, Ryzen 7 5825U, 16GB RAM, 512GB SSD, Backlit KB",
+            performance: {
+                processor: "Ryzen 7 5825U",
+                ram: "16GB",
+                storage: "512GB SSD",
+                benchmark: "9,800 (Cinebench R23)",
+                battery: "56.5Wh (8-10 hours)"
+            },
+            reviews: [
+                { rating: 5, text: "Excellent performance", author: "Sanjay P." },
+                { rating: 4, text: "Light and portable", author: "Meera K." }
+            ],
+            inStock: true,
+            priceTier: "mid-range"
+        },
+        {
+            name: "MacBook Pro 14\"",
+            brand: "Apple",
+            price: "₹1,99,900",
+            category: "Electronics",
+            subcategory: "Laptops",
+            image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=300",
+            description: "14.2\" Liquid Retina XDR, M2 Pro, 16GB RAM, 512GB SSD, macOS",
+            performance: {
+                processor: "M2 Pro",
+                ram: "16GB",
+                storage: "512GB SSD",
+                benchmark: "12,500 (Cinebench R23)",
+                battery: "70Wh (18-20 hours)"
+            },
+            reviews: [
+                { rating: 5, text: "Unmatched performance", author: "Ravi K." },
+                { rating: 5, text: "Best display I've seen", author: "Ananya G." }
+            ],
+            inStock: true,
+            priceTier: "premium"
+        },
+        // Other electronics
+        {
+            name: "Samsung 55\" QLED TV",
+            brand: "Samsung",
+            price: "₹64,990",
+            category: "Electronics",
+            subcategory: "TVs",
+            image: "https://images.pexels.com/photos/5721908/pexels-photo-5721908.jpeg?auto=compress&cs=tinysrgb&w=300",
+            description: "55\" 4K QLED, Quantum HDR, Smart TV with Bixby",
+            performance: {
+                resolution: "3840x2160",
+                refreshRate: "120Hz",
+                hdr: "Quantum HDR 12x",
+                sound: "40W 2.2CH"
+            },
+            reviews: [
+                { rating: 5, text: "Stunning picture quality", author: "Amit R." },
+                { rating: 4, text: "Great for movies", author: "Priyanka M." }
+            ],
+            inStock: true,
+            priceTier: "mid-range"
+        },
+        {
+            name: "OnePlus Buds Pro 2",
+            brand: "OnePlus",
+            price: "₹11,999",
+            category: "Electronics",
+            subcategory: "Audio",
+            image: "https://images.pexels.com/photos/1646704/pexels-photo-1646704.jpeg?auto=compress&cs=tinysrgb&w=300",
+            description: "ANC, 48dB noise reduction, 39hr battery, LHDC 5.0",
+            performance: {
+                battery: "39hr total (9hr buds)",
+                anc: "48dB reduction",
+                codecs: "LHDC 5.0, AAC, SBC",
+                latency: "54ms"
+            },
+            reviews: [
+                { rating: 4, text: "Great ANC performance", author: "Rahul S." },
+                { rating: 5, text: "Comfortable for long use", author: "Neha K." }
+            ],
+            inStock: true,
+            priceTier: "mid-range"
+        }
+        
+    ];
+// In your index.html, find the products array and add this right after it:
+const deals = [
+    {
+        name: "Smartphone Deal",
+        brand: "Xiaomi",
+        price: "₹6,599",
+        originalPrice: "₹13,199",
+        discount: "50% OFF",
+        category: "Electronics",
+        subcategory: "Smartphones",
+        image: "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg",
+        description: "Limited time offer! Get our best smartphone at half price",
+        endDate: "2023-12-31",
+        inStock: true
+    },
+    {
+        name: "Keyboard Deal",
+        brand: "Mechanical",
+        price: "₹749",
+        originalPrice: "₹1,070",
+        discount: "30% OFF",
+        category: "Electronics",
+        subcategory: "Accessories",
+        image: "https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg",
+        description: "Premium mechanical keyboard at discounted price",
+        endDate: "2023-12-15",
+        inStock: true
+    }
+];
+    // Updated sendMessage function to handle product suggestions
+    function sendMessage() {
+        const input = document.getElementById('chatbot-input');
+        const message = input.value.trim();
+        
+        if (message) {
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Process and generate bot response
+            setTimeout(() => {
+                let response = '';
+                let productResponse = null;
+                let matchedProducts = [];
+                
+                // Convert to lowercase for easier matching
+                const lowerMessage = message.toLowerCase();
+                
+                // Simple commands
+                if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                    response = "Hello! Welcome to CHATCART. How can I assist you today?";
+                } 
+                else if (lowerMessage.includes('bye') || lowerMessage.includes('goodbye')) {
+                    response = "Goodbye! Thank you for visiting CHATCART. Have a great day!";
+                }
+                else if (lowerMessage.includes('thank')) {
+                    response = "You're welcome! Is there anything else I can help you with?";
+                }
+                else if (lowerMessage.includes('help')) {
+                    response = "I can help you with:\n- Product information\n- Product availability\n- Order status\n- Returns & refunds\n- General questions\n\nWhat would you like to know?";
+                }
+                // Check for product suggestions
+                else if (lowerMessage.includes('suggest') || lowerMessage.includes('recommend') || 
+                         lowerMessage.includes('best') || lowerMessage.includes('good')) {
+                    
+                    // Check for price tier requests
+                    if (lowerMessage.includes('budget') || lowerMessage.includes('cheap') || lowerMessage.includes('low price')) {
+                        matchedProducts = products.filter(p => 
+                            p.priceTier === "budget" && p.inStock);
+                        response = "Here are our best budget options:";
+                    }
+                    else if (lowerMessage.includes('premium') || lowerMessage.includes('high end') || 
+                             lowerMessage.includes('best performance') || lowerMessage.includes('expensive')) {
+                        matchedProducts = products.filter(p => 
+                            p.priceTier === "premium" && p.inStock);
+                        response = "Here are our premium/high-performance options:";
+                    }
+                    else if (lowerMessage.includes('mid') || lowerMessage.includes('mid range') || 
+                             lowerMessage.includes('balanced')) {
+                        matchedProducts = products.filter(p => 
+                            p.priceTier === "mid-range" && p.inStock);
+                        response = "Here are our best mid-range options:";
+                    }
+                    // Check for brand requests
+                    else if (lowerMessage.includes('mi') || lowerMessage.includes('xiaomi')) {
+                        matchedProducts = products.filter(p => 
+                            p.brand.toLowerCase().includes("xiaomi") && p.inStock);
+                        response = "Here are our Xiaomi products:";
+                    }
+                    else if (lowerMessage.includes('samsung')) {
+                        matchedProducts = products.filter(p => 
+                            p.brand.toLowerCase().includes("samsung") && p.inStock);
+                        response = "Here are our Samsung products:";
+                    }
+                    else if (lowerMessage.includes('iphone') || lowerMessage.includes('apple')) {
+                        matchedProducts = products.filter(p => 
+                            p.brand.toLowerCase().includes("apple") && p.inStock);
+                        response = "Here are our Apple products:";
+                    }
+                    else if (lowerMessage.includes('acer')) {
+                        matchedProducts = products.filter(p => 
+                            p.brand.toLowerCase().includes("acer") && p.inStock);
+                        response = "Here are our Acer products:";
+                    }
+                    else if (lowerMessage.includes('lenovo')) {
+                        matchedProducts = products.filter(p => 
+                            p.brand.toLowerCase().includes("lenovo") && p.inStock);
+                        response = "Here are our Lenovo products:";
+                    }
+                    // Check for product type requests
+                    else if (lowerMessage.includes('phone') || lowerMessage.includes('smartphone')) {
+                        matchedProducts = products.filter(p => 
+                            p.subcategory === "Smartphones" && p.inStock);
+                        response = "Here are our smartphone options:";
+                    }
+                    else if (lowerMessage.includes('laptop') || lowerMessage.includes('notebook')) {
+                        matchedProducts = products.filter(p => 
+                            p.subcategory === "Laptops" && p.inStock);
+                        response = "Here are our laptop options:";
+                    }
+                    else if (lowerMessage.includes('tv') || lowerMessage.includes('television')) {
+                        matchedProducts = products.filter(p => 
+                            p.subcategory === "TVs" && p.inStock);
+                        response = "Here are our TV options:";
+                    }
+                    else if (lowerMessage.includes('headphone') || lowerMessage.includes('earbud') || 
+                             lowerMessage.includes('audio')) {
+                        matchedProducts = products.filter(p => 
+                            p.subcategory === "Audio" && p.inStock);
+                        response = "Here are our audio options:";
+                    }
+                    else {
+                        // Default suggestion - show 3 random in-stock products
+                        const inStockProducts = products.filter(p => p.inStock);
+                        matchedProducts = [];
+                        for (let i = 0; i < Math.min(3, inStockProducts.length); i++) {
+                            const randomIndex = Math.floor(Math.random() * inStockProducts.length);
+                            matchedProducts.push(inStockProducts[randomIndex]);
+                            inStockProducts.splice(randomIndex, 1);
+                        }
+                        response = "Here are some products you might like:";
+                    }
+                }
+                // Check for product availability
+                else if (lowerMessage.includes('available') || lowerMessage.includes('stock') || 
+                         lowerMessage.includes('have') || lowerMessage.includes('sell') ||
+                         lowerMessage.includes('offer')) {
+                    
+                    // Check if they mentioned a specific product
+                    const mentionedProducts = products.filter(product => 
+                        lowerMessage.includes(product.name.toLowerCase().split(' ')[0]));
+                    
+                    if (mentionedProducts.length > 0) {
+                        mentionedProducts.forEach(product => {
+                            if (product.inStock) {
+                                response += `Yes, we have ${product.name} in stock. `;
+                                productResponse = product;
+                            } else {
+                                response += `Sorry, ${product.name} is currently out of stock. `;
+                            }
+                        });
+                    } else {
+                        // If no specific product mentioned, list categories
+                        const categories = [...new Set(products.map(p => p.category))];
+                        response = `We have products in these categories: ${categories.join(', ')}. Would you like to see products from a specific category?`;
+                    }
+                }
+                // Product information requests
+                else if (lowerMessage.includes('product') || lowerMessage.includes('item') || 
+                         lowerMessage.includes('show') || lowerMessage.includes('see') ||
+                         lowerMessage.includes('compare')) {
+                    
+                    // Check if they mentioned a category
+                    const categories = [...new Set(products.map(p => p.category))];
+                    const mentionedCategory = categories.find(cat => 
+                        lowerMessage.includes(cat.toLowerCase()));
+                    
+                    if (mentionedCategory) {
+                        matchedProducts = products.filter(p => 
+                            p.category === mentionedCategory && p.inStock);
+                        
+                        if (matchedProducts.length > 0) {
+                            response = `Here are our available ${mentionedCategory} products:`;
+                        } else {
+                            response = `We currently don't have any ${mentionedCategory} products in stock.`;
+                        }
+                    } 
+                    // Check if they mentioned a subcategory
+                    else {
+                        const subcategories = [...new Set(products.map(p => p.subcategory))];
+                        const mentionedSubcategory = subcategories.find(subcat => 
+                            subcat && lowerMessage.includes(subcat.toLowerCase()));
+                        
+                        if (mentionedSubcategory) {
+                            matchedProducts = products.filter(p => 
+                                p.subcategory === mentionedSubcategory && p.inStock);
+                            
+                            if (matchedProducts.length > 0) {
+                                response = `Here are our available ${mentionedSubcategory} products:`;
+                            } else {
+                                response = `We currently don't have any ${mentionedSubcategory} products in stock.`;
+                            }
+                        }
+                        // Check if they mentioned a specific product
+                        else {
+                            const mentionedProduct = products.find(product => 
+                                product.name.toLowerCase().split(' ').some(word => 
+                                    lowerMessage.includes(word)));
+                            
+                            if (mentionedProduct) {
+                                productResponse = mentionedProduct;
+                                response = `Here's information about ${mentionedProduct.name}:`;
+                            } else {
+                                response = "We have these product categories available: " + 
+                                    categories.join(', ') + ". Or you can ask about a specific product.";
+                            }
+                        }
+                    }
+                }
+                else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
+                    const mentionedProduct = products.find(product => 
+                        product.name.toLowerCase().split(' ').some(word => 
+                            lowerMessage.includes(word)));
+                    
+                    if (mentionedProduct) {
+                        response = `The price of ${mentionedProduct.name} is ${mentionedProduct.price}.`;
+                        productResponse = mentionedProduct;
+                    } else {
+                        response = "Which product's price would you like to know?";
+                    }
+                }
+                else if (lowerMessage.includes('delivery')) {
+                    response = "We offer fast delivery within 24 hours in metro cities. Standard delivery takes 2-3 business days.";
+                } 
+                else if (lowerMessage.includes('return') || lowerMessage.includes('exchange')) {
+                    response = "We have a 10-day easy return policy. You can initiate a return from your orders page.";
+                } 
+                else if (lowerMessage.includes('payment')) {
+                    response = "We accept all major credit/debit cards, UPI, net banking, and cash on delivery.";
+                }
+                else if (lowerMessage.includes('performance') || lowerMessage.includes('spec') || 
+                         lowerMessage.includes('benchmark')) {
+                    const mentionedProduct = products.find(product => 
+                        product.name.toLowerCase().split(' ').some(word => 
+                            lowerMessage.includes(word)));
+                    
+                    if (mentionedProduct) {
+                        productResponse = mentionedProduct;
+                        response = `Here are the performance details for ${mentionedProduct.name}:`;
+                    } else {
+                        response = "Which product's performance specs would you like to see?";
+                    }
+                }
+                else {
+                    // Try to find a product match for generic queries
+                    const mentionedProduct = products.find(product => 
+                        product.name.toLowerCase().split(' ').some(word => 
+                            lowerMessage.includes(word)));
+                    
+                    if (mentionedProduct) {
+                        productResponse = mentionedProduct;
+                        response = `Here's information about ${mentionedProduct.name}:`;
+                    } else {
+                        response = "I'm here to help with product information or general questions. You can ask about:\n- Product availability\n- Prices\n- Delivery options\n- Returns policy\n- Product recommendations\n\nHow may I assist you?";
+                    }
+                }
+                 if (lowerMessage.includes('deal') || lowerMessage.includes('offer') || 
+                     lowerMessage.includes('discount') || lowerMessage.includes('sale')) {
+                
+                if (deals.length > 0) {
+                    response = "We have these special offers available:";
+                    matchedProducts = deals;
+                } else {
+                    response = "Currently there are no special offers, but check back soon!";
+                }
+            }
+                
+                // Add the bot's text response
+                if (response) {
+                    addMessage(response, 'bot');
+                }
+                
+                // If a specific product was requested, show its details
+                if (productResponse) {
+                    showProductDetails(productResponse);
+                }
+                
+                // If multiple products matched (like in a category), show them all
+                if (matchedProducts.length > 0) {
+                    matchedProducts.forEach(product => {
+                        showProductDetails(product);
+                    });
+                }
+            }, 1000);
+        }
+    }
+
+    
+    // Enhanced showProductDetails function to display performance metrics
+    function showProductDetails(product) {
+        const messagesContainer = document.getElementById('chatbot-messages');
+        
+        // Create product image element
+        const productImage = document.createElement('img');
+        productImage.src = product.image;
+        productImage.className = 'product-image';
+        productImage.alt = product.name;
+        
+        // Create product info element
+        const productInfo = document.createElement('div');
+        productInfo.className = 'message bot';
+        
+        // Add stock status badge
+        const stockStatus = product.inStock ? 
+            '<span style="color: green;">✓ In Stock</span>' : 
+            '<span style="color: red;">✗ Out of Stock</span>';
+        
+        // Create performance details if they exist
+        let performanceDetails = '';
+        if (product.performance) {
+            performanceDetails = '<br><strong>Performance:</strong><br>';
+            for (const [key, value] of Object.entries(product.performance)) {
+                performanceDetails += `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}<br>`;
+            }
+        }
+         // Add deal information if it exists
+    let dealInfo = '';
+    if (product.originalPrice) {
+        dealInfo = `
+            <div style="background:#fff8e1;padding:10px;border-radius:5px;margin:10px 0;">
+                <strong>SPECIAL OFFER!</strong><br>
+                Original Price: <span style="text-decoration:line-through">${product.originalPrice}</span><br>
+                ${product.discount ? 'Discount: ' + product.discount + '<br>' : ''}
+                ${product.endDate ? 'Offer ends: ' + product.endDate : ''}
+            </div>
+        `;
+    }
+    
+    productInfo.innerHTML = `
+        ${dealInfo}
+        <strong>${product.name}</strong><br>
+        <em>${product.brand} • ${product.category}${product.subcategory ? ' • ' + product.subcategory : ''}</em><br>
+        ${product.description}<br>
+        Price: ${product.price}<br>
+        ${stockStatus}
+        ${performanceDetails}
+        ${product.inStock ? `
+        <button class="chat-add-btn" onclick="addToCart('${product.name}', ${product.price.replace(/[^0-9]/g, '')}, '${product.image}')">
+            Add to Cart
+        </button>` : ''}
+    `;
+    
+    if (product.reviews && product.reviews.length > 0) {
+        const reviewsDiv = document.createElement('div');
+        reviewsDiv.className = 'message bot';
+        reviewsDiv.innerHTML = '<strong>Customer Reviews:</strong>';
+        
+        product.reviews.forEach(review => {
+            const reviewDiv = document.createElement('div');
+            reviewDiv.style.marginTop = '10px';
+            reviewDiv.innerHTML = `
+                ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}<br>
+                "${review.text}"<br>
+                <em>- ${review.author}</em>
+            `;
+            reviewsDiv.appendChild(reviewDiv);
+        });
+        
+        messagesContainer.appendChild(productImage);
+        messagesContainer.appendChild(productInfo);
+        messagesContainer.appendChild(reviewsDiv);
+    } else {
+        messagesContainer.appendChild(productImage);
+        messagesContainer.appendChild(productInfo);
+    }
+    
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+        
+        productInfo.innerHTML = `
+            <strong>${product.name}</strong><br>
+            <em>${product.brand} • ${product.category}${product.subcategory ? ' • ' + product.subcategory : ''}</em><br>
+            ${product.description}<br>
+            Price: ${product.price}<br>
+            ${stockStatus}
+            ${performanceDetails}
+            ${product.inStock ? `
+            <button class="chat-add-btn" onclick="addToCart('${product.name}', ${product.price.replace(/[^0-9]/g, '')}, '${product.image}')">
+                Add to Cart
+            </button>` : ''}
+        `;
+        
+        // Create reviews section only if there are reviews
+        if (product.reviews && product.reviews.length > 0) {
+            const reviewsDiv = document.createElement('div');
+            reviewsDiv.className = 'message bot';
+            reviewsDiv.innerHTML = '<strong>Customer Reviews:</strong>';
+            
+            product.reviews.forEach(review => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.style.marginTop = '10px';
+                reviewDiv.innerHTML = `
+                    ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}<br>
+                    "${review.text}"<br>
+                    <em>- ${review.author}</em>
+                `;
+                reviewsDiv.appendChild(reviewDiv);
+            });
+            
+            // Append all elements to chat
+            messagesContainer.appendChild(productImage);
+            messagesContainer.appendChild(productInfo);
+            messagesContainer.appendChild(reviewsDiv);
+        } else {
+            // Append without reviews if none exist
+            messagesContainer.appendChild(productImage);
+            messagesContainer.appendChild(productInfo);
+        }
+        
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    
+    // User session management
+function checkLoginStatus() {
+    // Load user database
+    const userDB = {
+        getCurrentUser: function() {
+            const session = localStorage.getItem('currentSession');
+            if (!session) return null;
+            const users = JSON.parse(localStorage.getItem('CHATCARTUsers') || '[]');
+            const currentSession = JSON.parse(session);
+            return users.find(user => user.id === currentSession.userId);
+        },
+        logout: function() {
+            localStorage.removeItem('currentSession');
+        }
+    };
+
+    const user = userDB.getCurrentUser();
+    const userProfile = document.getElementById('user-profile');
+    const usernameDisplay = document.getElementById('username-display');
+    const loginLink = document.getElementById('login-link');
+    const logoutLink = document.getElementById('logout-link');
+
+    if (user) {
+        // User is logged in
+        usernameDisplay.textContent = user.name;
+        userProfile.classList.remove('hidden');
+        logoutLink.classList.remove('hidden');
+        loginLink.classList.add('hidden');
+    } else {
+        // User is not logged in
+        userProfile.classList.add('hidden');
+        logoutLink.classList.add('hidden');
+        loginLink.classList.remove('hidden');
+    }
+}
+
+
+function logout() {
+    // Load user database
+    const userDB = {
+        logout: function() {
+            localStorage.removeItem('currentSession');
+        }
+    };
+
+    userDB.logout();
+    alert('You have been logged out successfully.');
+    checkLoginStatus(); // Update UI
+    window.location.href = 'index.html'; // Refresh page
+}
+
+// Check login status when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    checkLoginStatus();
+    
+    // Existing code...
+    loadCart();
+    // ...rest of your existing code
+});
+
+</script>
+</body>
+</html>
